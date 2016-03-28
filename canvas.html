@@ -1,0 +1,100 @@
+
+<html>
+<head>
+	<title>gif workshop | canvas</title>
+	<style>
+
+		body {
+			text-align:center;
+			background-color: #333333;
+			margin: 100px;		
+		}
+
+
+	</style>
+</head>
+
+<body>
+	<div id="container">
+		<canvas id="canvas" width="500" height="500"> </canvas>
+	</div>
+
+	<script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
+
+	<script type="text/javascript">
+
+		var socket = io.connect('http://localhost:3030');
+		var frame_num=0;
+
+
+
+		var canvas = document.getElementById("canvas");
+		var ctx=canvas.getContext("2d");
+
+
+		ctx.fillStyle = "rgba(30, 30, 30, 1)";
+		ctx.fillRect(0,0,500,500);
+
+
+		function draw(){
+
+
+			ctx.fillStyle = "rgba(30, 30, 30, 0.05)";
+			ctx.fillRect(0,0,500,500);
+
+			var d=new Date();
+			var n=d.getTime();
+
+			var speed_movement=0.002;
+
+			var x=Math.cos(n*speed_movement)*100+250;
+			var y=Math.sin(n*speed_movement*3)*50+250;
+
+
+			var r=20;
+
+			ctx.beginPath();
+
+			ctx.arc(x,y,r,Math.PI*2,false);
+
+			ctx.closePath();
+
+			ctx.fillStyle= "rgba(100, 150, 150, 1)";
+			ctx.fill();	
+
+
+
+			frame_num++;
+
+			if (frame_num>200&&frame_num<400) {
+
+				var file_name;
+				if(frame_num<100)file_name='00'+frame_num;
+				if(frame_num<10)file_name='000'+frame_num;
+
+				console.log('save frame',frame_num);
+
+				socket.emit('render-frame', {
+					path: "path_to_the_folder/frames",
+					frame: frame_num,
+					file: document.querySelector('canvas').toDataURL()
+				});
+
+			}
+
+
+			requestAnimationFrame(draw);
+
+
+			
+
+		}
+
+
+		draw();
+
+
+	</script>
+</body>
+
+</html>
