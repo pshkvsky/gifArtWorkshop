@@ -21,4 +21,7 @@ We are doing this setup only once.
 1. In canvas.html change "path_to_the_folder/frames" to the path of the folder where you want to export frames
 2. Run canvas.html and look at the terminal
 
+###Covert image sequence to gif
+Use steps from this tutorial to generate gif http://goo.gl/OT7N8f
+
 
