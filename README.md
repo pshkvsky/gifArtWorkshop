@@ -1,5 +1,7 @@
 #Making gif with javascript 
 
+![js gif workshop](http://www.pshkvsky.com/js/gif2code/gifworkshop.gif)
+
 ###Prepairing node
 We are doing this setup only once.
 
